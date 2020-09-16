@@ -52,6 +52,7 @@ function handleScriptError(script, callback) {
 export interface ILoadScriptOptions {
   version?: string;
   url?: string;
+  dojoPath?: string;
   css?: string | boolean;
   dojoConfig?: { [propName: string]: any };
   insertCssBefore?: string;
@@ -88,7 +89,7 @@ export function loadScript(options: ILoadScriptOptions = {}): Promise<HTMLScript
   });
   // URL to load
   const version = opts.version;
-  const url = opts.url || getCdnUrl(version);
+  const url = opts.url ? opts.url + (opts.dojoPath || '') : getCdnUrl(version);
 
   return new utils.Promise((resolve, reject) => {
     let script = getScript();
